@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block main_content %}
+  <!-- FEATURED BLOG -->
+    {% include 'post/featured_blog.html' with object_list=featured_list %}
+  <!-- GRID CLASS -->
+  <div class="container">
+  <div class="row">
+    <div class="col-md-8">
+        
+    </div>
+    <div class="col-md-4">
+        {% include 'post/recent_post_list.html' with object_list=recent_list %}
+    </div>
+  </div>
+  </div>
+{% endblock %}

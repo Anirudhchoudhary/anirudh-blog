@@ -1,0 +1,9 @@
+<h1>Post</h1>
+<ul>
+{% for article in object_list %}
+    <!-- <img src="{{ article.images.img512.url }}" alt="dsafasdasdasd" /> -->
+    {% include 'post/postcard.html' with title=article.title image_url=article.images.img126.url %}
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>

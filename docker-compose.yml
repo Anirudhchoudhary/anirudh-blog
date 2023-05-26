@@ -1,0 +1,30 @@
+version: '3'
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Qwerty@12345
+      MYSQL_DATABASE: blog
+      MYSQL_PASSWORD: Qwerty@12345
+    ports:
+      - 3307:3306
+    volumes:
+      - db_data:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+
+volumes:
+  db_data:

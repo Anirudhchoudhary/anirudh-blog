@@ -1,0 +1,42 @@
+{% extends 'base/base.html' %}
+{% block title %} {{object.title}} {% endblock %}
+{% block main_content %}
+<style>
+    .description__image {
+        display: block;
+    }
+
+    .thumbnail {
+        position: relative;
+        display: inline-block;
+    }
+
+    .caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate( -50%, -50% );
+        text-align: center;
+        color: white;
+        font-weight: bold;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 col-xs-12">
+        <div id="box-search">
+            <div class="thumbnail" style="width: 100%; height: auto; object-fit:contain">
+                <img src="{{object.images.img512.url}}" style="width: 100%; height: auto; object-fit: cover;" class="img-fluid description__image" alt="{{ object.title }}">
+                <div class="caption">
+                    <h1 class="text-dark">{{object.title}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 mb-2">
+        <div class="container text-dark">
+            {{ object.desciption| safe }}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
