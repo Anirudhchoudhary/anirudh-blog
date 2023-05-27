@@ -21,6 +21,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 import blobproject.views as views
 
+handler404 = "blobproject.views.error_404"
+handler500 = "blobproject.views.error_500"
+handler403 = "blobproject.views.error_403"
+handler400 = "blobproject.views.error_400"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.Home.as_view(), name='home'),

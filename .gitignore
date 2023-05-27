@@ -1,0 +1,6 @@
+__pycache__
+thingtodo.md
+*.sqlite3
+media
+static_root
+.env

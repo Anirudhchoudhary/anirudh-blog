@@ -1,16 +1,28 @@
 {% extends 'base/base.html' %}
 {% block main_content %}
-  <!-- FEATURED BLOG -->
-    {% include 'post/featured_blog.html' with object_list=featured_list %}
-  <!-- GRID CLASS -->
-  <div class="container">
+<!-- FEATURED BLOG -->
+{% include 'post/featured_blog.html' with object_list=featured_list %}
+<!-- GRID CLASS -->
+<div class="container">
   <div class="row">
     <div class="col-md-8">
-        
+      <h3>Tech News</h3>
+      <swiper-container class="mySwiper" pagination="true" effect="coverflow" grab-cursor="true" centered-slides="true"
+        slides-per-view="auto" coverflow-effect-rotate="50" coverflow-effect-stretch="0" coverflow-effect-depth="100"
+        coverflow-effect-modifier="1" coverflow-effect-slide-shadows="true">
+        {% for news in news_list %}
+          <swiper-slide>
+            <a class="text-white" href="{% url 'blog_detail' pk=news.pk %}">
+              <img src="{{news.images.img512.url}}" />
+              <p class="lead align-text-bottom">{{news.title|truncatechars:50}}</p>
+            </a>
+          </swiper-slide>
+        {% endfor %}
+      </swiper-container>
     </div>
     <div class="col-md-4">
-        {% include 'post/recent_post_list.html' with object_list=recent_list %}
+      {% include 'post/recent_post_list.html' with object_list=recent_list %}
     </div>
   </div>
-  </div>
+</div>
 {% endblock %}

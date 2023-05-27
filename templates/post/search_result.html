@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% block main_content %}
+{% include 'post/featured_blog.html' with object_list=object_list %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item disabled">
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1"
+            aria-disabled="true">Previous</a>
+        </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% endif %}
+    </ul>
+    <p class="lead text-center">
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+    </p>
+</nav>
+
+{% endblock %}

@@ -85,12 +85,8 @@ WSGI_APPLICATION = 'blobproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mysql',
-        'USER': 'root',
-        'PASSWORD': 'Qwerty@12345',
-        'HOST': 'localhost',
-        'PORT': 3307,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

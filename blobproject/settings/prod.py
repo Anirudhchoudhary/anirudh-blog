@@ -12,10 +12,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 TEMPLATES_DIR = BASE_DIR / 'templates'
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -24,10 +30,9 @@ TEMPLATES_DIR = BASE_DIR / 'templates'
 SECRET_KEY = 'django-insecure-fu=*nba&k43w4el#qh)eyzv1wvw2law6gg9f!3n*==(&gad5=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -86,9 +91,9 @@ WSGI_APPLICATION = 'blobproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get("MYSQL_DATABASE"),
+        'NAME': env("MYSQL_DATABASE"),
         'USER': "root",
-        'PASSWORD': os.environ.get("MYSQL_PASSWORD"),
+        'PASSWORD': env("MYSQL_PASSWORD"),
         'HOST': 'db',
         'PORT': 3306,
         'OPTIONS': {'sql_mode': 'STRICT_ALL_TABLES', 'charset': 'utf8mb4',},
@@ -139,16 +144,16 @@ USE_TZ = True
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
-USE_S3 = False
+USE_S3 = True
 
 if USE_S3:
     # aws settings
-    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+    AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
     AWS_DEFAULT_ACL = 'public-read'
     AWS_S3_FILE_OVERWRITE = False
-    AWS_REGION = os.environ.get("AWS_REGION")
+    AWS_REGION = env("AWS_REGION")
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com'
     AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # s3 static settings

@@ -1,7 +1,36 @@
 body {
-    background-color: rgb(171, 171, 171);
+    font-family: serif;
 }
 
 a {
     text-decoration: none;
+}
+
+.card {
+    background-size: contain;
+}
+
+#post_detail_img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    opacity: 0.5;
+}
+
+swiper-container {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 300px;
+}
+
+swiper-slide img {
+    display: block;
+    width: 100%;
 }
