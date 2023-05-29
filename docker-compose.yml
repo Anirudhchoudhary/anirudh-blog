@@ -14,13 +14,24 @@ services:
       - db_data:/var/lib/mysql
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
   web:
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    ports:
-      - 8001:8001
+    expose:
+      - 8001
     volumes:
       - .:/code
     depends_on:
