@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['annycodecamp.com', 'www.annycodecamp.com']
 
 # Application definition
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'storages',
     'ckeditor',
     'rest_framework',
+    'django_extensions',
 
     # custom app
     'core',
@@ -91,10 +92,10 @@ WSGI_APPLICATION = 'blobproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': env("MYSQL_DATABASE"),
-        'USER': "root",
-        'PASSWORD': env("MYSQL_PASSWORD"),
-        'HOST': 'db',
+        'NAME': 'anirudh0601$blog',
+        'USER': "anirudh0601",
+        'PASSWORD': "Qwerty@12345",
+        'HOST': 'anirudh0601.mysql.pythonanywhere-services.com',
         'PORT': 3306,
         'OPTIONS': {'sql_mode': 'STRICT_ALL_TABLES', 'charset': 'utf8mb4',},
     }
@@ -144,6 +145,7 @@ USE_TZ = True
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
+import datetime
 USE_S3 = True
 
 if USE_S3:
@@ -151,18 +153,27 @@ if USE_S3:
     AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_S3_FILE_OVERWRITE = False
+    AWS_FILE_EXPIRE = 200
+    AWS_PRELOAD_METADATA = True
+    AWS_QUERYSTRING_AUTH = True
     AWS_REGION = env("AWS_REGION")
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com'
-    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     # s3 static settings
-    AWS_LOCATION = 'static'
-    STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATIC_LOCATION = 'static'
+    S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = f'{S3_URL}static/'
     MEDIA_LOCATION = 'media'
-    MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+    MEDIA_URL = f'{S3_URL}media/'
     STATIC_ROOT = BASE_DIR / "static_root"
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    ADMIN_MEDIA_PREFIX = f'{STATIC_URL}admin/'
+    STATICFILES_STORAGE = 'blobproject.custom-storage.StaticStorage'
+    two_months = datetime.timedelta(days=61)
+    date_two_months_later = datetime.date.today() + two_months
+    expires = date_two_months_later.strftime("%A, %d %B %Y 20:00:00 GMT")
+
+    AWS_HEADERS = { 
+        'Expires': expires,
+        'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
+    }
 else:
     STATIC_URL = 'static/'
     STATICFILES_DIR = BASE_DIR / "static"
@@ -176,7 +187,6 @@ else:
     STATICFILES_DIRS = [STATICFILES_DIR]
     MEDIAFILES_DIRS = [MEDIAFILES_DIR]
 
-
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -185,5 +195,7 @@ else:
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SHELL_PLUS = "ipython"
 
 DEFAULT_FILE_STORAGE = 'blobproject.custom-storage.MediaStorage'

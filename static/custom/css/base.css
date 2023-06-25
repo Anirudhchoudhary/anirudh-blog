@@ -34,3 +34,19 @@ swiper-slide img {
     display: block;
     width: 100%;
 }
+
+#action-items {
+    position: fixed;
+    top: 50%;
+    left: 10%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+
+.action-icons {
+    margin-top: 10px;
+}

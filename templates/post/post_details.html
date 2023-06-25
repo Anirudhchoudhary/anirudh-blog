@@ -21,20 +21,40 @@
         font-weight: bold;
     }
 </style>
-<div class="row">
-    <div class="col-md-12 col-xs-12">
-        <div id="box-search">
-            <div class="thumbnail" style="width: 100%; height: auto; object-fit:contain">
-                <img id="post_detail_img" src="{{object.images.img512.url}}" class="img-fluid description__image" alt="{{ object.title }}">
-                <div class="caption">
-                    <h1 class="text-dark">{{object.title}}</h1>
+<div id="action-items">
+    <div class="action-icons" id="like-icon">
+        <button class="btn" onclick="handleButtonClick({{object.pk}})">
+            <i class="bi bi-star"></i> <small> {{object.liked}}</small>
+        </button>
+    </div>
+    <div class="action-icons" id="share-icon">
+        <button class="btn" onclick="handleButtonClick({{object.pk}})">
+            <i class="bi bi-share"></i>
+        </button>
+    </div>
+    <div class="action-icons" id="share-icon">
+        <button class="btn" onclick="handleButtonClick({{object.pk}})">
+            <i class="bi bi-eye"></i> <small> {{object.viewed}} </small>
+        </button>
+    </div>
+    
+</div>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div id="box-search">
+                <div class="thumbnail" style="width: 100%; height: auto; object-fit:contain">
+                    <img id="post_detail_img" src="{{object.images.img512.url}}" class="img-fluid description__image" alt="{{ object.title }}">
+                    <div class="caption">
+                        <h1 class="text-dark text-center">{{object.title}}</h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12 col-xs-12 mb-2">
-        <div class="container text-dark">
-            {{ object.desciption| safe }}
+        <div class="col-md-12 col-xs-12 mb-2">
+            <div class="container text-dark">
+                {{ object.desciption| safe }}
+            </div>
         </div>
     </div>
 </div>

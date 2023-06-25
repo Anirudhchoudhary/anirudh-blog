@@ -4,3 +4,7 @@ thingtodo.md
 media
 static_root
 .env
+/ignore
+/media
+media__root/upload
+/upload

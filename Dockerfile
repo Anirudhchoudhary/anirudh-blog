@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 ENV ENV_TYPE "PROD"
 
 RUN pip install --upgrade pip
+RUN apt-get update && apt-get install -y certbot && apt-get install -y python3-certbot-nginx
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt

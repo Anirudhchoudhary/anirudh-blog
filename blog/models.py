@@ -35,3 +35,26 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+    @property
+    def liked(self):
+        try:
+            return self.poststats_set.all().first().like
+        except:
+            return 0
+
+    @property
+    def viewed(self):
+        try:
+            return self.poststats_set.all().first().viewed
+        except:
+            return 0
+
+class PostStats(models.Model):
+    like = models.PositiveIntegerField(default=0)
+    viewed = models.PositiveIntegerField(default=0)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return str(self.like)
+
